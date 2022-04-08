@@ -9,11 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
+const test_controller_1 = require("./test.controller");
 let HttpModule = class HttpModule {
 };
 HttpModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot()],
+        controllers: [test_controller_1.TestController,]
     })
 ], HttpModule);
 exports.HttpModule = HttpModule;

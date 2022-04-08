@@ -8,11 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthorizationGuard = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const express_jwt_1 = require("express-jwt");
+const express_jwt_1 = __importDefault(require("express-jwt"));
 const jwks_rsa_1 = require("jwks-rsa");
 const node_util_1 = require("node:util");
 let AuthorizationGuard = class AuthorizationGuard {
@@ -25,7 +28,7 @@ let AuthorizationGuard = class AuthorizationGuard {
     async canActivate(context) {
         const httpContext = context.switchToHttp();
         const req = httpContext.getRequest();
-        const res = httpContext..getResponse();
+        const res = httpContext.getResponse();
         const checkJWT = (0, node_util_1.promisify)((0, express_jwt_1.default)({
             secret: (0, jwks_rsa_1.expressJwtSecret)({
                 cache: true,
