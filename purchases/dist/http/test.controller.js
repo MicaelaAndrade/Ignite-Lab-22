@@ -11,19 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestController = void 0;
 const common_1 = require("@nestjs/common");
+const prisma_service_1 = require("../database/prisma/prisma.service");
+const authorization_guard_1 = require("./auth/authorization.guard");
 let TestController = class TestController {
+    constructor(prisma) {
+        this.prisma = prisma;
+    }
     hello() {
-        return 'Hello World!';
+        return this.prisma.customer.findMany();
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('ok'),
+    (0, common_1.UseGuards)(authorization_guard_1.AuthorizationGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], TestController.prototype, "hello", null);
 TestController = __decorate([
-    (0, common_1.Controller)('test')
+    (0, common_1.Controller)('test'),
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], TestController);
 exports.TestController = TestController;
 //# sourceMappingURL=test.controller.js.map
