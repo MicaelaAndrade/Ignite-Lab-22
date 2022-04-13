@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthorizationGuard = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
+const graphql_1 = require("@nestjs/graphql");
 const express_jwt_1 = __importDefault(require("express-jwt"));
 const jwks_rsa_1 = require("jwks-rsa");
 const node_util_1 = require("node:util");
@@ -26,9 +27,7 @@ let AuthorizationGuard = class AuthorizationGuard {
         this.AUTH0_DOMAIN = (_b = this.configService.get('AUTH0_DOMAIN')) !== null && _b !== void 0 ? _b : '';
     }
     async canActivate(context) {
-        const httpContext = context.switchToHttp();
-        const req = httpContext.getRequest();
-        const res = httpContext.getResponse();
+        const { req, res } = graphql_1.GqlExecutionContext.create(context).getContext();
         const checkJWT = (0, node_util_1.promisify)((0, express_jwt_1.default)({
             secret: (0, jwks_rsa_1.expressJwtSecret)({
                 cache: true,
@@ -41,12 +40,12 @@ let AuthorizationGuard = class AuthorizationGuard {
             algorithms: ['RS256'],
         }));
         try {
+            await checkJWT(req, res);
             return true;
         }
         catch (err) {
             throw new common_1.UnauthorizedException(err);
         }
-        return true;
     }
 };
 AuthorizationGuard = __decorate([

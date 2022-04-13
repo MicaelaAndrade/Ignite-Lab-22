@@ -10,6 +10,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpModule = void 0;
+const apollo_1 = require("@nestjs/apollo");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const graphql_1 = require("@nestjs/graphql");
@@ -20,13 +21,15 @@ let HttpModule = class HttpModule {
 };
 HttpModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule.forRoot(),
+        imports: [
+            config_1.ConfigModule.forRoot(),
             database_module_1.DatabaseModule,
             graphql_1.GraphQLModule.forRoot({
+                driver: apollo_1.ApolloDriver,
                 autoSchemaFile: node_path_1.default.resolve(process.cwd(), 'src/schema.graphql'),
-            })
+            }),
         ],
-        providers: [test_resolver_1.TestResolver]
+        providers: [test_resolver_1.TestResolver],
     })
 ], HttpModule);
 exports.HttpModule = HttpModule;

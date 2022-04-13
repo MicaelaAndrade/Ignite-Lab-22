@@ -7,4 +7,4 @@ import { HttpModule } from './http/http.module';
   controllers: [],
   providers: [PrismaService],
 })
-export class AppModule { }
+export class AppModule {}
