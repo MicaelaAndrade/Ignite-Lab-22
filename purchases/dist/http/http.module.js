@@ -16,7 +16,7 @@ const config_1 = require("@nestjs/config");
 const graphql_1 = require("@nestjs/graphql");
 const node_path_1 = __importDefault(require("node:path"));
 const database_module_1 = require("../database/database.module");
-const test_resolver_1 = require("./test.resolver");
+const products_resolver_1 = require("./graphql/resolvers/products.resolver");
 let HttpModule = class HttpModule {
 };
 HttpModule = __decorate([
@@ -29,7 +29,7 @@ HttpModule = __decorate([
                 autoSchemaFile: node_path_1.default.resolve(process.cwd(), 'src/schema.graphql'),
             }),
         ],
-        providers: [test_resolver_1.TestResolver],
+        providers: [products_resolver_1.ProductsResolver],
     })
 ], HttpModule);
 exports.HttpModule = HttpModule;
